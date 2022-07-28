@@ -1,4 +1,4 @@
-# Eliptic Curve Addition
+# Elliptic Curve Addition
 
 P + Q = R is the additive property defined geometrically.
 
