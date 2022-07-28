@@ -7,7 +7,7 @@ class Point:
         return self.x == other.x and self.y == other.y
 
 
-class ElipticCurve:
+class EllipticCurve:
     def __init__(self, a, b, p):
         self.a = a
         self.b = b
@@ -47,9 +47,9 @@ class ElipticCurve:
         return result.x, result.y
 
 
-p1 = Point(16, 5)
-p2 = Point(1, 2)
-ec = ElipticCurve(9, 17, 23)
+# p1 = Point(16, 5)
+# p2 = Point(1, 2)
+# ec = EllipticCurve(9, 17, 23)
 
-print(ec.add(p1, p2))
-print(ec.mul(p1, 9))
+# print(ec.add(p1, p2))
+# print(ec.mul(p1, 9))
