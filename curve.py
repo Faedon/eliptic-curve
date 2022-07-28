@@ -18,7 +18,7 @@ class ElipticCurve:
             raise ZeroDivisionError("Impossible inverse")
         return pow(x, self.p - 2, self.p)
 
-    def addition(self, p1, p2):
+    def add(self, p1, p2):
         if p2 == Point(0, 0):
             result = p1
         elif p1 == Point(0, 0):
@@ -33,9 +33,22 @@ class ElipticCurve:
 
         return result.x, result.y
 
+    def decToBinary(self, num):
+        return bin(num).replace("0b", "")
+
+    # def mul(self, p1, n):
+    #     ttl = ""
+    #     for i in range(len(self.decToBinary(n)), 0, -1):
+    #         for bit in self.decToBinary(n)[i - 1]:
+    #             if bit == 1:
+    #                 ttl = "2**" + str(i)
+    #         print(ttl)
+
 
 p1 = Point(5, 1)
 p2 = Point(5, 1)
 ec = ElipticCurve(2, 2, 17)
 
-print(ec.addition(p1, p2))
+print(ec.add(p1, p2))
+# print(ec.decToBinary(7))
+# ec.mul(p1, 26)
