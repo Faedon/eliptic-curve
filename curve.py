@@ -23,32 +23,33 @@ class ElipticCurve:
             result = p1
         elif p1 == Point(0, 0):
             result = p2
-        elif p1 == p2:
-            l = (3 * p1.x**2 + self.a) * self.inv_mod_p(2 * p1.y)
         else:
-            l = (p2.y - p1.y) * self.inv_mod_p(p2.x - p1.x)
-        x = (l**2 - p1.x - p2.x) % self.p
-        y = -(l * x + p1.y - l * p1.x) % self.p
-        result = Point(x, y)
+            if p1 == p2:
+                l = (3 * p1.x**2 + self.a) * self.inv_mod_p(2 * p1.y)
+            else:
+                l = (p2.y - p1.y) * self.inv_mod_p(p2.x - p1.x)
+            x = (l**2 - p1.x - p2.x) % self.p
+            y = -(l * x + p1.y - l * p1.x) % self.p
+            result = Point(x, y)
 
         return result.x, result.y
 
     def decToBinary(self, num):
         return bin(num).replace("0b", "")
 
-    # def mul(self, p1, n):
-    #     ttl = ""
-    #     for i in range(len(self.decToBinary(n)), 0, -1):
-    #         for bit in self.decToBinary(n)[i - 1]:
-    #             if bit == 1:
-    #                 ttl = "2**" + str(i)
-    #         print(ttl)
+    def mul(self, p1, n):
+        result = Point(0, 0)
+        temp = p1
+        for b in self.decToBinary(n):
+            if b == "1":
+                result = Point(self.add(temp, result)[0], self.add(temp, result)[1])
+            temp = Point(self.add(temp, temp)[0], self.add(temp, temp)[1])
+        return result.x, result.y
 
 
-p1 = Point(5, 1)
-p2 = Point(5, 1)
-ec = ElipticCurve(2, 2, 17)
+p1 = Point(16, 5)
+p2 = Point(1, 2)
+ec = ElipticCurve(9, 17, 23)
 
 print(ec.add(p1, p2))
-# print(ec.decToBinary(7))
-# ec.mul(p1, 26)
+print(ec.mul(p1, 9))
