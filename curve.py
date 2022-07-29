@@ -1,3 +1,6 @@
+from cmath import e
+
+
 class Point:
     def __init__(self, x, y):
         self.x = x
@@ -8,15 +11,16 @@ class Point:
 
 
 class EllipticCurve:
-    def __init__(self, a, b, p):
+    def __init__(self, a, b, p, n):
         self.a = a
         self.b = b
         self.p = p  # mod p
+        self.n = n
 
     def inv_mod_p(self, x):
-        if x % self.p == 0:
+        if x % self.n == 0:
             raise ZeroDivisionError("Impossible inverse")
-        return pow(x, self.p - 2, self.p)
+        return pow(x, self.n - 2, self.n)
 
     def add(self, p1, p2):
         if p2 == Point(0, 0):
@@ -37,13 +41,12 @@ class EllipticCurve:
     def decToBinary(self, num):
         return bin(num).replace("0b", "")
 
-    def mul(self, p1, n):
+    ##def mul(self, p1, n):
+
+    def mul(self, p1: Point, n):
         result = Point(0, 0)
-        temp = p1
-        for b in self.decToBinary(n):
-            if b == "1":
-                result = Point(self.add(temp, result)[0], self.add(temp, result)[1])
-            temp = Point(self.add(temp, temp)[0], self.add(temp, temp)[1])
+        for _ in range(n):  # or range(scalar % N)
+            result = Point(self.add(result, p1)[0], self.add(result, p1)[1])
         return result.x, result.y
 
 
